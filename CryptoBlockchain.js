@@ -3,6 +3,7 @@
 class CryptoBlockchain{
     constructor(){
         this.blockchain = [this.startGenesisBlock()];
+        this.difficulty = 4;
     }
     
     createGenesisBlock(){
@@ -17,6 +18,7 @@ class CryptoBlockchain{
     addNewBlock(newBlock){
         newBlock.precedingHash = this.obtainLatestBlock().hash;
         newBlock.hash = newBlock.computeHash();
+        newBlock.proofOfWork(this.difficulty);
         this.blockchain.push(newBlock);
     }
 
@@ -36,3 +38,23 @@ class CryptoBlockchain{
         return true;
     }
 }
+
+let nomaCoin = new CryptoBlockchain();
+console.log("nomaCoin mining in progress...");
+nomaCoin.addNewBlock(
+    new Crypto(1, "28/04/2024", {
+        sender: "Tatiana Maks",
+        recipient: "Lambo Maks",
+        quantity: 100
+    })
+);
+
+nomaCoin.addNewBlock(
+    new Crypto(1, "29/04/2024", {
+        sender: "Kamogelo Mole",
+        recipient: "Ntokozo Lamb",
+        quantity: 200
+    }) 
+);
+
+console.log(JSON.stringify(nomaCoin, null, 4))
